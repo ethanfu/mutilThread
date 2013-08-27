@@ -18,6 +18,7 @@ import java.util.concurrent.Future;
 public class ExecutorMain {
 
     private final static int THREAD_COUNT = 10;
+    private final static int SPLIT_COUNT = 10;
 
     private final static ExecutorService executorService = Executors.newFixedThreadPool(THREAD_COUNT);
 
@@ -30,10 +31,10 @@ public class ExecutorMain {
     public static void process() {
 
         prepareData();
-        int splitCount = arrayList.size() / THREAD_COUNT;
+        int splitCount = arrayList.size() / SPLIT_COUNT;
         List<Future<List<User>>> futures = new ArrayList<Future<List<User>>>(splitCount);
-        for (int i = 0; i < THREAD_COUNT; i++) {
-            Future<List<User>> future = executorService.submit(new Handler(arrayList.subList(i == 0 ? i : i*THREAD_COUNT , getSubListIndex(arrayList.size(), i))));
+        for (int i = 0; i < SPLIT_COUNT; i++) {
+            Future<List<User>> future = executorService.submit(new Handler(arrayList.subList(i == 0 ? i : i * SPLIT_COUNT , getSubListIndex(arrayList.size(), i))));
             futures.add(future);
         }
 
@@ -75,8 +76,8 @@ public class ExecutorMain {
      * @return
      */
     private static int getSubListIndex(int size,int index){
-        int subIndex = THREAD_COUNT * (index + 1);
-        if (((index + 1) * THREAD_COUNT) > arrayList.size()) {
+        int subIndex = SPLIT_COUNT * (index + 1);
+        if (((index + 1) * SPLIT_COUNT) > arrayList.size()) {
             subIndex = arrayList.size();
         }
         return subIndex;
