@@ -20,17 +20,13 @@ public class ExecutorSplitList {
     private final static int THREAD_COUNT = 5;
     private final static int SPLIT_COUNT = 10;
 
-    private final static ExecutorService executorService = Executors.newFixedThreadPool(THREAD_COUNT);
+    private final ExecutorService executorService = Executors.newFixedThreadPool(THREAD_COUNT);
 
-    private static List<User> arrayList;
+    private List<User> arrayList;
+    private List<User> afterUsers;
 
-    public static void main(String[] args) {
-        process();
-    }
+    public void process() {
 
-    public static void process() {
-
-        prepareData();
         int splitCount = arrayList.size() / SPLIT_COUNT;
         List<Future<List<User>>> futures = new ArrayList<Future<List<User>>>(splitCount);
         for (int i = 0; i < SPLIT_COUNT; i++) {
@@ -38,7 +34,7 @@ public class ExecutorSplitList {
             futures.add(future);
         }
 
-        List<User> afterUsers = new ArrayList<User>(arrayList.size());
+        afterUsers = new ArrayList<User>(arrayList.size());
 
         for (Future<List<User>> future : futures) {
             try {
@@ -50,23 +46,7 @@ public class ExecutorSplitList {
             }
         }
         executorService.shutdown();
-        for (User user : afterUsers) {
-            System.out.println(user.toString());
-        }
 
-
-    }
-
-    private static void prepareData() {
-        arrayList = new ArrayList<User>(100);
-
-        for (int i = 0; i < 100;i++) {
-            User user = new User();
-            user.setId(i);
-            user.setName(i + "name");
-            user.setAge(i + 10);
-            arrayList.add(user);
-        }
     }
 
     /**
@@ -75,13 +55,19 @@ public class ExecutorSplitList {
      * @param index
      * @return
      */
-    private static int getSubListIndex(int size,int index){
+    private int getSubListIndex(int size,int index){
         int subIndex = SPLIT_COUNT * (index + 1);
-        if (((index + 1) * SPLIT_COUNT) > arrayList.size()) {
-            subIndex = arrayList.size();
+        if (((index + 1) * SPLIT_COUNT) > size) {
+            subIndex = size;
         }
         return subIndex;
     }
 
+    public void setArrayList(List<User> arrayList) {
+        this.arrayList = arrayList;
+    }
 
+    public List<User> getAfterUsers() {
+        return afterUsers;
+    }
 }
