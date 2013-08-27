@@ -10,12 +10,12 @@ import java.util.concurrent.Callable;
  * Time: 下午2:34
  * To change this template use File | Settings | File Templates.
  */
-public class Handler implements Callable {
+public class HandlerCall implements Callable {
 
     private List<User> users;
 
 
-    public Handler(List<User> users) {
+    public HandlerCall(List<User> users) {
         this.users = users;
     }
 

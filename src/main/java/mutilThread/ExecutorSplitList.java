@@ -15,7 +15,7 @@ import java.util.concurrent.Future;
  * Time: 下午2:38
  * To change this template use File | Settings | File Templates.
  */
-public class ExecutorMain {
+public class ExecutorSplitList {
 
     private final static int THREAD_COUNT = 5;
     private final static int SPLIT_COUNT = 10;
@@ -34,7 +34,7 @@ public class ExecutorMain {
         int splitCount = arrayList.size() / SPLIT_COUNT;
         List<Future<List<User>>> futures = new ArrayList<Future<List<User>>>(splitCount);
         for (int i = 0; i < SPLIT_COUNT; i++) {
-            Future<List<User>> future = executorService.submit(new Handler(arrayList.subList(i == 0 ? i : i * SPLIT_COUNT , getSubListIndex(arrayList.size(), i))));
+            Future<List<User>> future = executorService.submit(new HandlerCall(arrayList.subList(i == 0 ? i : i * SPLIT_COUNT , getSubListIndex(arrayList.size(), i))));
             futures.add(future);
         }
 
