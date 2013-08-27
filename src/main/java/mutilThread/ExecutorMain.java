@@ -8,7 +8,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 /**
- * Created with IntelliJ IDEA.
+ * 这个实现方式主要是事先把需要处理的数据主动分割，这样避免同步队列请求锁的开销。
+ *
  * User: ethan
  * Date: 13-8-26
  * Time: 下午2:38
