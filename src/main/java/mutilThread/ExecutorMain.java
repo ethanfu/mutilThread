@@ -17,7 +17,7 @@ import java.util.concurrent.Future;
  */
 public class ExecutorMain {
 
-    private final static int THREAD_COUNT = 10;
+    private final static int THREAD_COUNT = 5;
     private final static int SPLIT_COUNT = 10;
 
     private final static ExecutorService executorService = Executors.newFixedThreadPool(THREAD_COUNT);
@@ -49,12 +49,12 @@ public class ExecutorMain {
                 e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
             }
         }
-
+        executorService.shutdown();
         for (User user : afterUsers) {
             System.out.println(user.toString());
         }
 
-        executorService.shutdown();
+
     }
 
     private static void prepareData() {
