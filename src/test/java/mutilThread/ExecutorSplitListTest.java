@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
 
 /**
  * Created with IntelliJ IDEA.
@@ -21,6 +22,7 @@ public class ExecutorSplitListTest {
         executorSplitList.setArrayList(prepareData());
         executorSplitList.process();
         assertEquals(executorSplitList.getAfterUsers().get(5).getAge(),1500);
+        assertTrue(executorSplitList.getExecutorService().isShutdown());
     }
 
     private List<User> prepareData() {

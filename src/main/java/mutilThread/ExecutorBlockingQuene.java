@@ -15,7 +15,7 @@ import java.util.concurrent.Future;
  * Time: 下午2:38
  * To change this template use File | Settings | File Templates.
  */
-public class ExecutorSplitList implements MyExecutorJob{
+public class ExecutorBlockingQuene {
 
     private final static int THREAD_COUNT = 5;
     private final static int SPLIT_COUNT = 10;
@@ -72,9 +72,5 @@ public class ExecutorSplitList implements MyExecutorJob{
 
     public List<User> getAfterUsers() {
         return afterUsers;
-    }
-
-    public ExecutorService getExecutorService() {
-        return executorService;
     }
 }
