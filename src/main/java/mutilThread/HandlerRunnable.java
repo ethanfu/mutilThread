@@ -1,7 +1,6 @@
 package mutilThread;
 
-import java.util.List;
-import java.util.concurrent.Callable;
+import java.util.concurrent.BlockingQueue;
 
 /**
  * Created with IntelliJ IDEA.
@@ -10,12 +9,13 @@ import java.util.concurrent.Callable;
  * Time: 下午2:34
  * To change this template use File | Settings | File Templates.
  */
-public class HandlerRunnable implements Callable {
+public class HandlerRunnable implements Runnable {
 
-    private List<User> users;
+    private BlockingQueue<User> users;
+    private BlockingQueue<User> afterUsers;
 
 
-    public HandlerRunnable(List<User> users) {
+    public HandlerRunnable(BlockingQueue<User> users) {
         this.users = users;
     }
 
@@ -26,15 +26,11 @@ public class HandlerRunnable implements Callable {
      * @throws Exception if unable to compute a result
      */
     @Override
-    public List<User> call() throws Exception {
-        return doSth();
-    }
-
-    private List<User> doSth() {
-        System.out.println("Asynchronous task" + Thread.currentThread().getName());
-        for (User user : users) {
-            user.setAge(user.getAge() * 100);
+    public void run() {
+        try {
+            User user = users.take();
+        } catch (InterruptedException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
-        return users;
     }
 }

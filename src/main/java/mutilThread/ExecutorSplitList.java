@@ -13,7 +13,6 @@ import java.util.concurrent.Future;
  * User: ethan
  * Date: 13-8-26
  * Time: 下午2:38
- * To change this template use File | Settings | File Templates.
  */
 public class ExecutorSplitList implements MyExecutorJob{
 
